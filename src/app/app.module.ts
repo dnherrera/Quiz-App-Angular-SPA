@@ -4,8 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule} from '@angular/material/input';
 import { MatCardModule} from '@angular/material/card';
-import { FormsModule} from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatListModule} from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -17,14 +17,20 @@ import { HomeComponent } from './Home/Home.component';
 import { NavComponent } from './Nav/Nav.component';
 import { QuizComponent } from './Quiz/Quiz.component';
 import { QuizzesComponent } from './Quizzes/Quizzes.component';
+import { RegisterComponent } from './Register/Register.component';
 
 import { ApiService } from './_service/api.service';
+import { AuthService } from './_service/auth.service';
+import { AuthInterceptor } from './_service/auth.interceptor';
+import { LoginComponent } from './Login/Login.component';
+
 
 const routes = [
    {  path: '', component: HomeComponent },
    {  path: 'question', component: QuestionComponent },
    {  path: 'question/:quizId', component: QuestionComponent },
-   {  path: 'questions', component: QuestionsComponent },
+   {  path: 'register', component: RegisterComponent },
+   {  path: 'login', component: LoginComponent },
    {  path: 'quiz', component: QuizComponent },
    {  path: 'quizzes', component: QuizzesComponent }
 ]
@@ -36,13 +42,16 @@ const routes = [
       HomeComponent,
       NavComponent,
       QuizComponent,
-      QuizzesComponent
+      QuizzesComponent,
+      RegisterComponent,
+      LoginComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       RouterModule.forRoot(routes),
       FormsModule,
+      ReactiveFormsModule,
       BrowserAnimationsModule,
       MatButtonModule,
       MatInputModule,
@@ -51,8 +60,13 @@ const routes = [
       MatToolbarModule
    ],
    providers: [
-      ApiService
-   ],
+      ApiService,
+      AuthService,
+      {
+         provide: HTTP_INTERCEPTORS,
+         useClass: AuthInterceptor,
+         multi: true
+      }],
    bootstrap: [
       AppComponent
    ]

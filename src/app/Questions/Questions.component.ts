@@ -16,10 +16,12 @@ export class QuestionsComponent implements OnInit {
 
   ngOnInit() {
     var quizId = this.route.snapshot.paramMap.get('quizId');
-
-    this.api.getQuestions(quizId).subscribe(res => {
-      this.questionList = res;this.questionList = Array.of(this.questionList); 
-    });
+    if(quizId != null){
+      this.api.getQuestions(quizId).subscribe(res => {
+        this.questionList = res;
+        this.questionList = Array.of(this.questionList); 
+      });
+    }
   }
 
 }
