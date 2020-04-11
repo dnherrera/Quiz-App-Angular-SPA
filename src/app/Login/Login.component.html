@@ -1,0 +1,15 @@
+<mat-card>
+  <form *ngIf="!loggedIn()" #loginForm="ngForm" (ngSubmit)="login()">
+    <h2 class="text-center text-primary">Login</h2>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Username" required name="username"
+      [(ngModel)]="model.username">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" placeholder="Password" required name="password"
+      [(ngModel)]="model.password">
+    </mat-form-field>
+    <button mat-raised-button color = "primary" [disabled]="!loginForm.valid">Login</button>
+  </form>
+</mat-card>
+

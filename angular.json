@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "QuizAppSPA"
+  "defaultProject": "QuizAppSPA",
+  "cli": {
+    "analytics": "e0fa0758-fea7-464f-b38d-79c4e37dfcda"
+  }
 }
