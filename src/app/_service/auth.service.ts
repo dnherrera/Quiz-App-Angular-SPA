@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError} from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -15,7 +16,7 @@ options = {
   headers: new HttpHeaders().append('content-type', 'application/json')
 }
 
-constructor(private http: HttpClient) { }
+constructor(private http: HttpClient, private router : Router) { }
 
 register(model: any) {
   return this.http.post(this.baseUrl + 'register', model, this.options).pipe(catchError(this.handleError));
@@ -39,6 +40,8 @@ loggedIn() {
   return !!token;
 }
 
+
+
 private handleError(error: any) {
   const applicationError = error.headers.get('Application-Error');
   if (applicationError) {
@@ -57,6 +60,8 @@ private handleError(error: any) {
     modelStateErrors || 'Server error'
   );
 }
+
+
 
 
 }

@@ -8,20 +8,16 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./Questions.component.css']
 })
 export class QuestionsComponent implements OnInit {
-  question :  any = {};
   questionList
   quizId
 
   constructor(public api: ApiService, private route : ActivatedRoute ) { }
 
   ngOnInit() {
-    var quizId = this.route.snapshot.paramMap.get('quizId');
-    if(quizId != null){
-      this.api.getQuestions(quizId).subscribe(res => {
-        this.questionList = res;
-        this.questionList = Array.of(this.questionList); 
-      });
+    this.quizId = this.route.snapshot.paramMap.get('quizId')
+    if(this.quizId != null){
+      this.api.getQuestions(this.quizId)
+      .subscribe(res => {this.questionList = res});
     }
   }
-
 }
