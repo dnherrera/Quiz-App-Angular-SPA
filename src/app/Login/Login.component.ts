@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-Login',
@@ -8,7 +9,7 @@ import { AuthService } from '../_service/auth.service';
 })
 export class LoginComponent implements OnInit {
   model   : any = {};
-  constructor(public authService : AuthService) { }
+  constructor(public authService : AuthService, private router : Router) { }
 
   ngOnInit() {
   }
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
   login(){
     console.log(this.model);
     this.authService.login(this.model).subscribe(data => {
+      this.router.navigate(['/']);
       console.log('Logged in Successfully');
     });
   }
